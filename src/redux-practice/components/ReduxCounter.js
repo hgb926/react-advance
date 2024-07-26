@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './ReduxCounter.module.css';
 import {useSelector, useDispatch} from 'react-redux'
-import { INCREMENT, DECREMENT, INCREMENTDOUBLE } from "../store/index"
+import { INCREMENT, DECREMENT, INCREMENTDOUBLE, TOGGLE } from "../store/index"
 
 const ReduxCounter = () => {
 
     // useSelector라는 훅을 통해 redux store에 있는 상태값을 가져옴
     const counter = useSelector(state => state.counter); // 변수
+    const show = useSelector(state => state.showCounter);
 
     // 리덕스 스토어에 상태값 변경을 위해 액션을 호출하는 훅
     const dispatch = useDispatch(); // setter
@@ -28,12 +29,17 @@ const ReduxCounter = () => {
 
     const incrementDouble = e => {
         dispatch({ type: INCREMENTDOUBLE, payload: 4 });
-    }
+    };
+
+    const toggleHandler = e => {
+        dispatch({ type: TOGGLE })
+    };
 
     return (
         <main className={styles.counter}>
             <h1>Redux Counter</h1>
-            <div className={styles.value}>{counter}</div>
+
+            {show && <div className={styles.value}>{counter}</div>}
 
             <div>
                 <button onClick={increaseHandler}>Increment</button>
@@ -41,7 +47,7 @@ const ReduxCounter = () => {
                 <button onClick={incrementDouble}>IncrementDouble</button>
             </div>
 
-            <button>Toggle Counter</button>
+            <button onClick={toggleHandler}>Toggle Counter</button>
         </main>
     );
 };
