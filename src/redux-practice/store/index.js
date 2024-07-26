@@ -34,10 +34,27 @@ const counterSlice = createSlice({
     }
 });
 
+// 인증 관련 초기 상태값
+const initialAuthState = {
+    isLoggedIn: false,
+};
+
+
+// 인증 관련 슬라이스 추가
+const authSlice = createSlice({
+    name: 'auth',
+    initialState: initialAuthState,
+    reducers: {}
+})
+
 // 단 하나의 리덕스 스토어
 // 스토어에는 여러 리듀서를 제공할 수 있다.
 const store = configureStore({
-    reducer: counterSlice.reducer // reducers가 아님!
+    // 한개 이상이면 객체로 묶어서 key를 추가해준다. key이름은 내맘대로
+    reducer: {
+        counter: counterSlice.reducer,
+        auth: authSlice.reducer
+    } // reducers가 아님!
 });
 
 // 슬라이스 안에 reducers에 정의한 함수들을 내보내기
